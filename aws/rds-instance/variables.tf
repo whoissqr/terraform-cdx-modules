@@ -25,18 +25,18 @@ variable "create_db_instance" {
 
 variable "prefix" {
   type        = string
-  description = "The prefix to prepend to all resources"
+  description = "Prefix to use for objects that need to be created"
 }
 
 variable "db_name" {
   type        = string
-  description = "Name of the RDS instance"
+  description = "Name of the RDS instance; if empty, then RDS instance will be created"
   default     = ""
 }
 
 variable "db_postgres_version" {
   type        = string
-  description = "Postgres version for rds instance"
+  description = "Postgres version of the RDS instance"
   default     = "9.6"
 }
 
@@ -45,64 +45,63 @@ variable "db_postgres_version" {
 # user cannot be used as it is a reserved word used by the engine"
 variable "db_username" {
   type        = string
-  description = "Username for rds instance"
+  description = "Username for the master DB user. Note: Do NOT use 'user' as the value"
   default     = "postgres"
 }
 
 variable "db_password" {
   type        = string
-  description = "Password for rds instance"
+  description = "Password for the master DB user; If empty, then random password will be set by default. Note: This will be stored in the state file"
   default     = ""
 }
 
 variable "db_vpc_id" {
   type        = string
-  description = "VPC id of EKS cluster"
+  description = "VPC Id of EKS cluster"
   default     = ""
 }
 
 variable "db_vpc_cidr_blocks" {
   type        = list(any)
-  description = "VPC CIDR Block of EKS cluster"
+  description = "CIDR Block of EKS cluster"
   default     = ["10.0.0.0/16"]
 }
 
 variable "db_private_subnets" {
   type        = list(any)
-  description = "Private subnets for rds instance"
+  description = "Private subnets of the RDS instance"
   default     = []
 }
 
 variable "db_public_access" {
   type        = bool
-  description = "Public access (enable/disable) flag for rds instance"
+  description = "Bool to control if instance is publicly accessible"
   default     = false
 }
 
 variable "db_instance_class" {
   type        = string
-  description = "Instance class for rds instance"
+  description = "Instance type of the RDS instance"
   default     = "db.t2.small"
 }
 
 variable "db_size_in_gb" {
   type        = number
-  description = "Storage size in gb for rds instance"
+  description = "Storage size in gb of the RDS instance"
   default     = 10
 }
 
 variable "db_port" {
   type        = number
-  description = "Port for rds instance"
+  description = "Port number on which the DB accepts connections"
   default     = 5432
 }
 
 variable "tags" {
   type        = map(string)
-  description = "Tags and labels for cloud resources"
+  description = "AWS Tags to add to all resources created (wherever possible)"
   default = {
     product    = "cnc"
-    stack      = "dev"
     automation = "dns"
     managedby  = "terraform"
   }

@@ -25,12 +25,12 @@ variable "create_bucket" {
 
 variable "prefix" {
   type        = string
-  description = "The prefix to prepend to all resources"
+  description = "Prefix to use for objects that need to be created"
 }
 
 variable "bucket_name" {
   type        = string
-  description = "Name of the S3 bucket"
+  description = "Name of the S3 bucket; if empty, then S3 bucket will be created"
   default     = ""
 }
 
@@ -42,10 +42,9 @@ variable "expire_after" {
 
 variable "tags" {
   type        = map(string)
-  description = "Tags and labels for cloud resources"
+  description = "AWS Tags to add to all resources created (wherever possible)"
   default = {
     product    = "cnc"
-    stack      = "dev"
     automation = "dns"
     managedby  = "terraform"
   }

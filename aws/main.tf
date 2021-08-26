@@ -31,6 +31,8 @@ module "eks_cluster" {
   default_node_pool_capacity_type       = var.default_node_pool_capacity_type
   default_node_pool_min_size            = var.default_node_pool_min_size
   default_node_pool_max_size            = var.default_node_pool_max_size
+  jobfarm_node_pool_instance_type       = var.jobfarm_node_pool_instance_type
+  jobfarm_node_pool_ami_type            = var.jobfarm_node_pool_ami_type
   jobfarm_node_pool_disk_size           = var.jobfarm_node_pool_disk_size
   jobfarm_node_pool_capacity_type       = var.jobfarm_node_pool_capacity_type
   jobfarm_node_pool_min_size            = var.jobfarm_node_pool_min_size

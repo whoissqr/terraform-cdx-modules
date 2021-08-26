@@ -19,7 +19,7 @@ variable "aws_region" {
 # Secrets configuration
 variable "prefix" {
   type        = string
-  description = "The prefix to prepend to all resources"
+  description = "Prefix to use for objects that need to be created"
 }
 
 variable "cluster_name" {
@@ -29,7 +29,7 @@ variable "cluster_name" {
 
 variable "create_db_secret" {
   type        = bool
-  description = "controls if db secret should be created"
+  description = "Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster"
   default     = true
 }
 
@@ -55,7 +55,7 @@ variable "db_password" {
 
 variable "create_s3_secret" {
   type        = bool
-  description = "controls if s3 secret should be created"
+  description = "Flag to enable/disable the 'cnc-s3-credentials' secret creation in the eks cluster"
   default     = true
 }
 

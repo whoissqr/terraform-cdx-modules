@@ -19,7 +19,7 @@ module "eks" {
   cluster_endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
   enable_irsa                          = true
   map_users                            = var.map_users
-  cluster_create_timeout               = var.instance_create_timeout
+  cluster_create_timeout               = var.cluster_create_timeout
   tags                                 = var.tags
   write_kubeconfig                     = false
 
@@ -47,7 +47,8 @@ module "eks" {
       desired_capacity = 1
       min_capacity     = var.jobfarm_node_pool_min_size
       max_capacity     = var.jobfarm_node_pool_max_size
-      instance_types   = ["c5d.2xlarge"]
+      ami_type         = var.jobfarm_node_pool_ami_type
+      instance_types   = [var.jobfarm_node_pool_instance_type]
       disk_size        = var.jobfarm_node_pool_disk_size
       capacity_type    = var.jobfarm_node_pool_capacity_type
       k8s_labels = {

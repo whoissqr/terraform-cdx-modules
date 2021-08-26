@@ -25,7 +25,7 @@ variable "create_vpc" {
 
 variable "prefix" {
   type        = string
-  description = "The prefix to prepend to all resources"
+  description = "Prefix to use for objects that need to be created"
 }
 
 variable "vpc_cidr_block" {
@@ -42,10 +42,9 @@ variable "vpc_id" {
 
 variable "tags" {
   type        = map(string)
-  description = "Tags and labels for cloud resources"
+  description = "AWS Tags to add to all resources created (wherever possible)"
   default = {
     product    = "cnc"
-    stack      = "dev"
     automation = "dns"
     managedby  = "terraform"
   }
