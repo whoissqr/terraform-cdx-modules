@@ -1,4 +1,3 @@
-
 provider "aws" {
   region     = var.aws_region
   access_key = var.aws_access_key
@@ -22,11 +21,11 @@ data "template_file" "private_cidrs" {
 }
 
 # Create the vpc if create_vpc flag is enabled
-# https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+# https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/3.6.0
 module "vpc" {
   source               = "terraform-aws-modules/vpc/aws"
   create_vpc           = var.create_vpc
-  version              = "3.2.0"
+  version              = "3.6.0"
   name                 = "${var.prefix}-vpc"
   cidr                 = var.vpc_cidr_block
   azs                  = data.aws_availability_zones.available.names

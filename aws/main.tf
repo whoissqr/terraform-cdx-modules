@@ -39,6 +39,7 @@ module "eks_cluster" {
   cluster_autoscaler_helm_chart_version = var.cluster_autoscaler_helm_chart_version
   deploy_ingress_controller             = var.deploy_ingress_controller
   ingress_controller_helm_chart_version = var.ingress_controller_helm_chart_version
+  tags                                  = var.tags
 }
 
 module "s3_bucket" {
@@ -50,6 +51,7 @@ module "s3_bucket" {
   prefix         = var.prefix
   bucket_name    = var.bucket_name
   expire_after   = var.expire_after
+  tags           = var.tags
 }
 
 module "rds_instance" {
@@ -70,6 +72,7 @@ module "rds_instance" {
   db_public_access    = var.db_public_access
   db_instance_class   = var.db_instance_class
   db_size_in_gb       = var.db_size_in_gb
+  tags                = var.tags
 }
 
 module "create_secrets_in_namespace" {
