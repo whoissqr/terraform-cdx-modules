@@ -26,7 +26,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 | cluster_name                          | Name of the existing EKS cluster; if empty, then EKS cluster will be created        | `string`                                                                               | `""`                                       | no      |
 | map_users                             | Additional IAM users to add to the aws-auth configmap                               |  ```list(object({ userarn  = string username = string groups   = list(string) }))```   | `[]`                                       | no      |
 | kubernetes_version                    | Kubernetes version of the EKS cluster                                               | `string`                                                                               | `"1.19"`                                   | no      |
-| cluster_endpoint_public_access_cidrs  | List of CIDR blocks which can access the Amazon EKS public API server endpoint. `Note: by default its open to all`                    | `list(string)`                       | `['0.0.0.0/0']`                            | no      |
+| cluster_endpoint_public_access_cidrs  | List of CIDR blocks which can access the Amazon EKS public API server endpoint. `Note: by default its open to all, we recommend to set your org CIDR blocks`                    | `list(string)`                       | `['0.0.0.0/0']`                            | no      |
 | deploy_autoscaler                     | Flag to enable/disable the cluster-autoscaler deployment in the eks cluster         | `bool`              | `true`                                     | no      |
 | cluster_autoscaler_helm_chart_version | Version of the cluster-autoscaler helm chart                                        | `string`            | `"9.10.4"`                                 | no      |
 | deploy_ingress_controller             | Flag to enable/disable the nginx-ingress-controller deployment in the eks cluster   | `bool`              | `true`                                     | no      |
@@ -98,6 +98,7 @@ $ export TF_VAR_aws_region="<aws_region>"
 **Notes:**
 - You can follow these [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/) to get access and secret key from AWS.
 - Terraform variable values can be passed in different ways. Please refer [this page](https://www.terraform.io/docs/language/values/variables.html#variable-definition-precedence) if you want to use a different way.
+- We recommend you to set your organization's CIDR ip ranges as `cluster_endpoint_public_access_cidrs` value and also set `map_users` value as per your requirement.
 
 ### Scenario-1: Complete infrastructure creation
 Here, terraform will create all the required resources from the scratch
