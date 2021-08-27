@@ -59,7 +59,7 @@ module "rds" {
 
   name     = local.db_name
   username = var.db_username
-  password = length(var.db_password) > 0 ? var.db_password : random_string.password.0.result
+  password = local.is_rds_instance_exist || length(var.db_password) > 0 ? var.db_password : random_string.password.0.result
   port     = var.db_port
   tags     = var.tags
 

@@ -30,6 +30,7 @@ variable "tags" {
 variable "prefix" {
   type        = string
   description = "Prefix to use for objects that need to be created"
+  default     = "cnc-scanfarm"
 }
 
 ## VPC configuration
