@@ -20,7 +20,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 | aws_secret_key                        | AWS secret key to create the resources                         | `string`                | n/a                                      | yes     |
 | aws_region                            | AWS region to create the resources                             | `string`                | n/a                                      | yes     |
 | tags                                  | AWS Tags to add to all resources created (wherever possible); see https://aws.amazon.com/answers/account-management/aws-tagging-strategies/   | `map(string)`               | `{'product': 'cnc', 'automation': 'dns', 'managedby': 'terraform'}` | no     |
-| prefix                                | Prefix to use for objects that need to be created (only alphanumeric characters and hyphens allowed) `Note: hyphens will be removed from prefix for RDS, S3 and namespace resources`    | `string`                      | `"cnc-scanfarm"`        | no     |
+| prefix                                | Prefix to use for objects that need to be created (only alphanumeric characters and hyphens allowed) `Note: hyphens will be removed from prefix for RDS, S3 and namespace resources`    | `string`                      | n/a        | yes     |
 | vpc_id                                | ID of the existing VPC; if empty, then VPC will be created     | `string`                                 | `""`                                       | no      |
 | vpc_cidr_block                        | CIDR block for the VPC                                         | `string`                                 | `"10.0.0.0/16"`                            | no      |
 | cluster_name                          | Name of the existing EKS cluster; if empty, then EKS cluster will be created        | `string`                                                                               | `""`                                       | no      |
@@ -74,6 +74,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 | db_instance_username | The master username for the RDS instance |
 | db_master_password | The master password for the RDS instance |
 | db_subnet_group_id | The subnet group name of the RDS instance |
+| namespace | The namespace in the EKS cluster where secrets resides in |
 
 
 ## Creating the CNC infrastructure on AWS
@@ -111,6 +112,7 @@ $ terraform apply --auto-approve
 ### Scenario-2: Infrastructure creation with existing VPC
 Here, terraform will create the EKS cluster, S3 bucket, RDS instance, kubernetes namespace and required secrets in it.
 ```bash
+$ export TF_VAR_prefix="cnc"
 $ export TF_VAR_vpc_id="vpc-07dc99f9a6682xxxx"
 $ terraform init
 $ terraform plan
@@ -120,8 +122,9 @@ $ terraform apply --auto-approve
 ### Scenario-3: Infrastructure creation with existing VPC and EKS cluster
 Here, terraform will try to deploy cluster-autoscaler, nginx-ingress-controller in the existing EKS cluster and then create the S3 bucket, RDS instance, kubernetes namespace and required secrets in it.
 ```bash
+$ export TF_VAR_prefix="cnc"
 $ export TF_VAR_vpc_id="vpc-07dc99f9a6682xxxx"
-$ export TF_VAR_cluster_name="cnc-scanfarm-cluster"
+$ export TF_VAR_cluster_name="cnc-cluster"
 $ terraform init
 $ terraform plan
 $ terraform apply --auto-approve
@@ -131,9 +134,10 @@ $ terraform apply --auto-approve
 ### Scenario-4: Infrastructure creation with existing VPC, EKS cluster and S3 bucket
 Here, terraform will create the RDS instance and  `cnc-db-credentials`, `cnc-s3-credentials` secrets in the kubernetes namespace.
 ```bash
+$ export TF_VAR_prefix="cnc"
 $ export TF_VAR_vpc_id="vpc-07dc99f9a6682xxxx"
-$ export TF_VAR_cluster_name="cnc-scanfarm-cluster"
-$ export TF_VAR_bucket_name="cncscanfarm-uploads-bucket"
+$ export TF_VAR_cluster_name="cnc-cluster"
+$ export TF_VAR_bucket_name="cnc-uploads-bucket"
 $ terraform init
 $ terraform plan
 $ terraform apply --auto-approve
@@ -142,10 +146,11 @@ $ terraform apply --auto-approve
 ### Scenario-5: Infrastructure creation with existing VPC, EKS cluster, S3 bucket and RDS instance
 Here, terraform will create the namespace and two kubernetes secrets (`cnc-db-credentials`, `cnc-s3-credentials`) in it.
 ```bash
+$ export TF_VAR_prefix="cnc"
 $ export TF_VAR_vpc_id="vpc-07dc99f9a6682xxxx"
-$ export TF_VAR_cluster_name="cnc-scanfarm-cluster"
-$ export TF_VAR_bucket_name="cncscanfarm-uploads-bucket"
-$ export TF_VAR_db_name="cncscanfarm-postgres"
+$ export TF_VAR_cluster_name="cnc-cluster"
+$ export TF_VAR_bucket_name="cnc-uploads-bucket"
+$ export TF_VAR_db_name="cnc-postgres"
 $ export TF_VAR_db_password="<random_password>"
 $ terraform init
 $ terraform plan

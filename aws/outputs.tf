@@ -63,3 +63,7 @@ output "db_instance_name" {
 output "db_subnet_group_id" {
   value = module.rds_instance.db_subnet_group_id
 }
+
+output "namespace" {
+  value = replace(lower(var.prefix), "/[^a-zA-Z0-9]/", "")
+}
