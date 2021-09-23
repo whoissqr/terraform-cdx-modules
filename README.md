@@ -95,6 +95,7 @@ $ cd terraform-cnc-modules/aws
 $ export TF_VAR_aws_access_key="<aws_access_key>"
 $ export TF_VAR_aws_secret_key="<aws_secret_key>"
 $ export TF_VAR_aws_region="<aws_region>"
+$ export TF_VAR_prefix="<unique_prefix_str>"
 ```
 **Notes:**
 - You can follow these [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/) to get access and secret key from AWS.
