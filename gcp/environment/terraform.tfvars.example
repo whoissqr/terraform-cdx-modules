@@ -9,4 +9,5 @@ gcp_cluster_name             = "cnc01-cluster"
 ## Change the below value as per your global-resource output field i.e gcp_network_self_link value
 gcp_network_self_link        = "https://www.googleapis.com/compute/v1/projects/cnc-gcp-project/global/networks/cnc01-vpc"
 
+## You must add NAT IP of your global-resource output field i.e gcp_nat_public_ip to the below list
 ingress_white_list_ip_ranges = ["0.0.0.0/0"]

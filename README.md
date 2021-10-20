@@ -245,7 +245,7 @@ Terraform creates the below GCP cloud resources by using the individual modules.
 | deploy_ingress_controller             | Flag to enable/disable the nginx-ingress-controller deployment in the GKE cluster                    | `bool`         | `true`                                   | no       |
 | ingress_namespace                     | Namespace in which ingress controller should be deployed. If empty, then ingress-controller will be created | `string`       | `""`                                     | no       |
 | ingress_controller_helm_chart_version | Version of the nginx-ingress-controller helm chart                                                   | `string`       | `3.35.0`                                 | no       |
-| ingress_white_list_ip_ranges          | List of source ip ranges for load balancer whitelisting; we recommend you to pass list of your organization source IPs | `list("string")` | `['0.0.0.0/0']`                          | no       |
+| ingress_white_list_ip_ranges          | List of source ip ranges for load balancer whitelisting; we recommend you to pass the list of your organization source IPs. Note: You must add NAT IP of your existing VPC or `gcp_nat_public_ip` output value from global module to this list | `list("string")` | `['0.0.0.0/0']`                          | no       |
 | ingress_settings                      | Additional settings which will be passed to the Helm chart values, see https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx | `map("string")` | `{}`                                     | no       |
 | app_namespace                         | Namespace of existing cluster in which secrets can be created; if empty, then namespace will be created with prefix value | `string`       | `""`                                     | no       |
 | create_db_secret                      | Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster                   | `bool`         | `true`                                   | no       |
@@ -307,6 +307,7 @@ $ terraform apply --auto-approve -var-file="terraform.tfvars.example"
 
 ### Complete infrastructure deletion
 We have to follow reverse order while deleting the resources.
+
 **Note:** Due to weird behavior of terraform, cloudsql instance will be deleted before deleting the google_sql_user in it. To overcome this problem, we are removing the `google_sql_user` resource from terraform state file manually.
 #### Step-1
 ```bash

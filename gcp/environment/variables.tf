@@ -148,7 +148,7 @@ variable "ingress_controller_helm_chart_version" {
 
 variable "ingress_white_list_ip_ranges" {
   type        = list(string)
-  description = "List of source ip ranges for load balancer whitelisting; we recommend you to pass list of your organization source IPs"
+  description = "List of source ip ranges for load balancer whitelisting; we recommend you to pass the list of your organization source IPs. Note: You must add NAT IP of your existing VPC or `gcp_nat_public_ip` output value from global module to this list"
   default     = ["0.0.0.0/0"]
 }
 
