@@ -1,5 +1,7 @@
-## Below values must be same as your global-resource input values
+## Prefix will be used as app_namespace by removing special characters
 prefix                       = "cnc01"
+
+## Below values must be same as your global-resource input values
 gcp_project                  = "cnc-gcp-project"
 gcp_region                   = "us-east1"
 
