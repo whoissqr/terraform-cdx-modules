@@ -1,0 +1,15 @@
+## Prefix will be used as app_namespace by removing special characters
+prefix                       = "cnc01"
+
+## Below values must be same as your global-resource input values
+gcp_project                  = "cnc-gcp-project"
+gcp_region                   = "us-east1"
+
+## Change the below value as per your global-resource output field i.e gcp_cluster_name value
+gcp_cluster_name             = "cnc01-cluster"
+
+## Change the below value as per your global-resource output field i.e gcp_network_self_link value
+gcp_network_self_link        = "https://www.googleapis.com/compute/v1/projects/cnc-gcp-project/global/networks/cnc01-vpc"
+
+## You must add NAT IP of your global-resource output field i.e gcp_nat_public_ip to the below list
+ingress_white_list_ip_ranges = ["0.0.0.0/0"]
