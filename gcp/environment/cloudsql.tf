@@ -11,11 +11,6 @@ data "google_compute_zones" "available" {
   region = var.gcp_region
 }
 
-data "google_compute_network" "vpc" {
-  count = local.is_vpc_exist ? 1 : 0
-  name  = var.vpc_name
-}
-
 resource "google_compute_global_address" "private_ip_address" {
   count         = local.is_cloudsql_instance_exist ? 0 : 1
   provider      = google-beta
@@ -24,7 +19,7 @@ resource "google_compute_global_address" "private_ip_address" {
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 24
-  network       = local.is_vpc_exist ? data.google_compute_network.vpc.0.self_link : module.vpc.0.network_self_link
+  network       = var.gcp_network_self_link
   labels        = var.tags
 }
 
@@ -32,7 +27,7 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   depends_on              = [google_compute_global_address.private_ip_address]
   count                   = local.is_cloudsql_instance_exist ? 0 : 1
   provider                = google-beta
-  network                 = local.is_vpc_exist ? data.google_compute_network.vpc.0.self_link : module.vpc.0.network_self_link
+  network                 = var.gcp_network_self_link
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip_address.0.name]
 }
@@ -69,7 +64,7 @@ resource "google_sql_database_instance" "master" {
     ip_configuration {
       ipv4_enabled    = var.db_ipv4_enabled
       require_ssl     = var.db_require_ssl
-      private_network = local.is_vpc_exist ? data.google_compute_network.vpc.0.self_link : module.vpc.0.network_self_link
+      private_network = var.gcp_network_self_link
     }
 
     dynamic "database_flags" {

@@ -17,7 +17,7 @@ resource "google_project_iam_member" "gcs_sa_binding" {
 }
 
 resource "kubernetes_namespace" "create_ns" {
-  count = (var.create_db_secret || var.create_gcs_secret) ? 1 : 0
+  count = (var.create_db_secret || var.create_gcs_secret) && length(var.app_namespace) == 0 ? 1 : 0
   metadata {
     name = local.namespace
     labels = {
@@ -42,7 +42,7 @@ resource "kubernetes_secret" "gcs_sa_k8s_secret" {
   data = {
     "key.json"    = base64decode(google_service_account_key.gcs_sa_key.0.private_key)
     bucket_name   = local.is_bucket_exist ? var.bucket_name : google_storage_bucket.uploads-bucket[0].name
-    bucket_region = var.gcp_region
+    bucket_region = var.bucket_region
   }
 }
 

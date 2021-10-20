@@ -1,33 +1,3 @@
-## VPC outputs
-output "vpc_network_name" {
-  value = local.is_vpc_exist ? var.vpc_name : module.vpc.0.network_name
-}
-
-output "vpc_subnet_name" {
-  value = local.is_vpc_exist ? var.vpc_subnet_name : module.vpc.0.subnets_names[0]
-}
-
-output "vpc_pod_range_name" {
-  value = local.is_vpc_exist ? var.vpc_pod_range_name : local.pod_range_name
-}
-
-output "vpc_service_range_name" {
-  value = local.is_vpc_exist ? var.vpc_service_range_name : local.service_range_name
-}
-
-output "vpc_nat_public_ip" {
-  value = local.is_vpc_exist ? var.vpc_nat_public_ips : [google_compute_address.static.0.address]
-}
-
-## Cluster outputs
-output "cluster_name" {
-  value = local.is_gke_cluster_exist ? var.cluster_name : module.gke.0.name
-}
-
-output "cluster_region" {
-  value = var.gcp_region
-}
-
 output "namespace" {
   value = local.namespace
 }
@@ -38,7 +8,7 @@ output "gcs_bucket_name" {
 }
 
 output "gcs_bucket_region" {
-  value = var.gcp_region
+  value = var.bucket_region
 }
 
 ## CloudSQL outputs

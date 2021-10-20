@@ -1,31 +1,13 @@
 locals {
-  ## VPC values
-  is_vpc_exist       = length(var.vpc_name) > 0 ? true : false
-  network_name       = "${var.prefix}-vpc"
-  subnet_name        = "${local.network_name}-subnet"
-  pod_range_name     = "${local.network_name}-pods"
-  service_range_name = "${local.network_name}-service"
-
-  ## GKE cluster values
-  is_gke_cluster_exist = length(var.cluster_name) > 0 ? true : false
-  namespace            = replace(lower(var.prefix), "/[^a-zA-Z0-9]/", "")
+  namespace = length(var.app_namespace) > 0 ? var.app_namespace : replace(lower(var.prefix), "/[^a-zA-Z0-9]/", "")
 
   ## Construct nginx ingress settings
-  nat_ip_list = [
-    for val in length(var.vpc_nat_public_ips) > 0 ? var.vpc_nat_public_ips : [google_compute_address.static.0.address] :
-    format("%s/32", val)
-  ]
-  master_authorized_ip_list = [
-    for x in var.master_authorized_networks_config :
-    x.cidr_block
-  ]
-  ip_white_list = concat(local.master_authorized_ip_list, local.nat_ip_list, var.ingress_white_list_ip_ranges)
   keylist = [
-    for val in local.ip_white_list :
-    format("controller.service.loadBalancerSourceRanges[%d]", index(local.ip_white_list, val))
+    for val in var.ingress_white_list_ip_ranges :
+    format("controller.service.loadBalancerSourceRanges[%d]", index(var.ingress_white_list_ip_ranges, val))
   ]
   valuelist = [
-    for val in local.ip_white_list :
+    for val in var.ingress_white_list_ip_ranges :
     val
   ]
   loadBalancerSourceRanges = zipmap(local.keylist, local.valuelist)
