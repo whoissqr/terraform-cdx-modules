@@ -267,7 +267,7 @@ Terraform creates the below GCP cloud resources by using the individual modules.
 ## Creating the CNC infrastructure on GCP
 
 ### Prerequisites
-Make sure you install the terraform
+Make sure you install terraform
 ```bash
 brew install terraform
 ```
@@ -281,22 +281,29 @@ $ git clone git@github.com:Synopsys-SIG-RnD/terraform-cnc-modules.git
 $ cd terraform-cnc-modules/gcp
 ```
 **Notes:**
-- You must need project Admin access (should be able to create IAM roles and service accounts) to create [environment](./gcp/environment) resources.
+- You must have project Admin access (should be able to create IAM roles and service accounts) to create [environment](./gcp/environment) resources.
 - Terraform variable values can be passed in different ways. Please refer [this page](https://www.terraform.io/docs/language/values/variables.html#variable-definition-precedence) if you want to use a different way.
 - We recommend you to set your organization's CIDR ip ranges as `master_authorized_networks_config` value and also set `ingress_white_list_ip_ranges` value as per your requirement.
-- As per your use case, you have to run `terraform apply` in [global-resources](./gcp/global-resources) and [environment](./gcp/environment) to create complete CNC infrastructure.
+- Per your use case, you have to run `terraform apply` in [global-resources](./gcp/global-resources) and [environment](./gcp/environment) to create complete CNC infrastructure.
 
 ### Complete infrastructure creation
-Here, terraform will create all the required resources from the scratch. First, we will create global-resources and then environment resources. You can tweek the `terraform.tfvars.example` file in each module as per your use case.
-#### Step-1
+Here, terraform will create all the required resources from the scratch. First, we will create global-resources and then environment resources. You can tweak the `terraform.tfvars.example` file in each module per your use case.
+
+#### Get set up with gcloud
+
+```bash
+$ gcloud auth application-default login
+```
+
+#### Create global resources
 ```bash
 $ cd terraform-cnc-modules/gcp/global-resources
-$ vi terraform.tfvars.example # modify/add input values as your requirements and save it
+$ vi terraform.tfvars.example # modify/add input values per your requirements and save it
 $ terraform init
 $ terraform plan -var-file="terraform.tfvars.example"
 $ terraform apply --auto-approve -var-file="terraform.tfvars.example"
 ```
-#### Step-2
+#### Create environment resources
 ```bash
 $ cd terraform-cnc-modules/gcp/environment
 $ vi terraform.tfvars.example # modify/add input values as per terraform output of your step-1(global-resource module) and save it
@@ -308,14 +315,14 @@ $ terraform apply --auto-approve -var-file="terraform.tfvars.example"
 ### Complete infrastructure deletion
 We have to follow reverse order while deleting the resources.
 
-**Note:** Due to weird behavior of terraform, cloudsql instance will be deleted before deleting the google_sql_user in it. To overcome this problem, we are removing the `google_sql_user` resource from terraform state file manually.
-#### Step-1
+**Note:** Due to weird behavior of terraform, the cloudsql instance will be deleted before deleting the google_sql_user in it. To overcome this problem, we are removing the `google_sql_user` resource from the terraform state file manually.
+#### Remove environment resources
 ```bash
 $ cd terraform-cnc-modules/gcp/environment
 $ terraform state list | grep google_sql_user | xargs -I fl terraform state rm fl
 $ terraform destroy --auto-approve -var-file="terraform.tfvars.example"
 ```
-#### Step-2
+#### Remove global resources
 ```bash
 $ cd terraform-cnc-modules/gcp/global-resources
 $ terraform destroy --auto-approve -var-file="terraform.tfvars.example"
