@@ -2,7 +2,7 @@
 
 This repository provides the terraform scripts to create the required infrastructure for CNC deployment
 
-Currently, the only supported cloud provider is:
+Currently, the supported cloud providers are:
 - AWS
 - GCP
 
