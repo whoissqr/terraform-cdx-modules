@@ -30,7 +30,7 @@ module "gke" {
   }]
   maintenance_start_time = "05:00"
 
-  node_pools = [
+  node_pools = concat([
     {
       name               = "app-pool"
       autoscaling        = true
@@ -45,36 +45,17 @@ module "gke" {
       auto_upgrade       = false
       preemptible        = false
       enable_secure_boot = true
-    },
+    }], local.scanfarm_node_pools
+  )
+
+  node_pools_labels = merge(
     {
-      name               = "medium-pool"
-      autoscaling        = true
-      node_count         = 0
-      min_count          = var.jobfarm_node_pool_min_size
-      max_count          = var.jobfarm_node_pool_max_size
-      image_type         = var.jobfarm_node_pool_image_type
-      machine_type       = var.jobfarm_node_pool_machine_type
-      disk_size_gb       = var.jobfarm_node_pool_disk_size
-      disk_type          = var.jobfarm_node_pool_disk_type
-      auto_repair        = true
-      auto_upgrade       = false
-      preemptible        = var.preemptible_jobfarm_nodes
-      enable_secure_boot = true
-    }
-  ]
+      "app-pool" = {
+        app       = "jobfarm"
+        pool-type = "app"
+      }
+    }, local.scanfarm_node_pool_labels
+  )
 
-  node_pools_labels = {
-    "app-pool" = {
-      app       = "jobfarm"
-      pool-type = "app"
-    },
-    "medium-pool" = {
-      app       = "jobfarm"
-      pool-type = "medium"
-    }
-  }
-
-  node_pools_taints = {
-    "medium-pool" = var.jobfarm_node_pool_taints
-  }
+  node_pools_taints = local.scanfarm_node_pool_taints
 }

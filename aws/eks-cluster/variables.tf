@@ -41,6 +41,12 @@ variable "create_eks" {
   default     = true
 }
 
+variable "scanfarm_enabled" {
+  type        = bool
+  description = "Whether scanfarm resources have to be created or not; Defaults to false (BETA)"
+  default     = false
+}
+
 variable "prefix" {
   type        = string
   description = "Prefix to use for objects that need to be created"

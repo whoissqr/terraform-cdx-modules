@@ -19,6 +19,12 @@ variable "tags" {
   }
 }
 
+variable "scanfarm_enabled" {
+  type        = bool
+  description = "Whether scanfarm resources have to be created or not; Defaults to false (BETA)"
+  default     = false
+}
+
 variable "prefix" {
   type        = string
   description = "Prefix to use for objects that need to be created. This must be unique"
@@ -70,7 +76,7 @@ variable "db_tier" {
 variable "db_version" {
   type        = string
   description = "Postgres database version"
-  default     = "POSTGRES_9_6"
+  default     = "POSTGRES_11"
 }
 
 variable "db_availability" {
@@ -111,7 +117,7 @@ variable "db_ipv4_enabled" {
 
 variable "db_require_ssl" {
   type        = bool
-  description = "Whether SSL connections over IP are enforced or not; if this is true, then certs will be stored in additional k8s secret(`cnc-db-ssl-cert`)"
+  description = "Whether SSL connections over IP are enforced or not;"
   default     = false
 }
 

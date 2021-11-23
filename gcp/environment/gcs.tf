@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "uploads-bucket" {
-  count         = local.is_bucket_exist ? 0 : 1
+  count         = var.scanfarm_enabled ? 1 : 0
   name          = "${local.namespace}-uploads-bucket"
   location      = var.bucket_region
   force_destroy = true # Delete even if non-empty

@@ -39,7 +39,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 | bucket_name                           | Name of the S3 bucket; if empty, then S3 bucket will be created                                           | `string`                  | `""`                       | no      |
 | expire_after                          | No.of days for expiration of S3 objects                                                                   | `string`                  | `"30"`                     | no      |
 | db_name                               | Name of the RDS instance; if empty, then RDS instance will be created                                     | `string`                  | `""`                       | no      |
-| db_postgres_version                   | Postgres version of the RDS instance                                                                      | `string`                  | `"9.6"`                    | no      |
+| db_postgres_version                   | Postgres version of the RDS instance                                                                      | `string`                  | `"11"`                    | no      |
 | db_username                           | Username for the master DB user. `Note: Do NOT use 'user' as the value`                                   | `string`                  | `"postgres"`               | no      |
 | db_password                           | Password for the master DB user; If empty, then random password will be set by default. `Note: This will be stored in the state file` | `string`       | `""`      | no      |
 | db_public_access                      | Bool to control if instance is publicly accessible                                                        | `bool`                    | `false`                    | no      |
@@ -94,6 +94,7 @@ $ export TF_VAR_prefix="<unique_prefix_str>"
 - You can follow these [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/) to get access and secret key from AWS.
 - Terraform variable values can be passed in different ways. Please refer [this page](https://www.terraform.io/docs/language/values/variables.html#variable-definition-precedence) if you want to use a different way.
 - We recommend you to set your organization's CIDR ip ranges as `cluster_endpoint_public_access_cidrs` value and also set `map_users` value as per your requirement.
+- To create scanfarm resources, you need to set `scanfarm_enabled` flag value as true.
 
 ### Scenario-1: Complete infrastructure creation
 Here, terraform will create all the required resources from the scratch

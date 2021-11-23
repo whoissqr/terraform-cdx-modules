@@ -1,7 +1,7 @@
 ## GCP Provider
 Terraform creates the below GCP cloud resources by using the individual modules.
 - [global-resources](./global-resources): This module will create the VPC network, subnetwork and GKE cluster.
-- [environment](./environment): This module will create the CloudSQL instance, GCS bucket, Required kubernetes namespace, secrets(`cnc-db-credentials`, `cnc-db-credentials`) and deploy nginx-ingress-controller in it
+- [environment](./environment): This module will create the CloudSQL instance, GCS bucket(if scanfarm_enabled is true) and deploy nginx-ingress-controller in it
 
 ## Global resources
 ### Inputs
@@ -69,7 +69,7 @@ Terraform creates the below GCP cloud resources by using the individual modules.
 | expire_after                          | No.of days for expiration of gcs objects                                                             | `string`       | `30`                                     | no       |
 | db_name                               | Name of the CloudSQL instance; if empty, then CloudSQL instance will be created                      | `string`       | `""`                                     | no       |
 | db_tier                               | The machine type to use for CloudSQL instance                                                        | `string`       | `db-custom-2-4096`                       | no       |
-| db_version                            | Postgres database version                                                                            | `string`       | `POSTGRES_9_6`                           | no       |
+| db_version                            | Postgres database version                                                                            | `string`       | `POSTGRES_11`                           | no       |
 | db_availability                       | The availability type of the CloudSQL instance                                                       | `string`       | `ZONAL`                                  | no       |
 | db_size_in_gb                         | Storage size in gb of the CloudSQL instance                                                          | `number`       | `10`                                     | no       |
 | database_flags                        | database_flags for CloudSQL instance                                                                 | `map("any")`   | `{}`                                     | no       |
@@ -122,6 +122,7 @@ $ cd terraform-cnc-modules/gcp
 - Terraform variable values can be passed in different ways. Please refer [this page](https://www.terraform.io/docs/language/values/variables.html#variable-definition-precedence) if you want to use a different way.
 - We recommend you to set your organization's CIDR ip ranges as `master_authorized_networks_config` value and also set `ingress_white_list_ip_ranges` value as per your requirement.
 - Per your use case, you have to run `terraform apply` in [global-resources](./gcp/global-resources) and [environment](./gcp/environment) to create complete CNC infrastructure.
+- To create scanfarm resources in both global and environment folders, you need to set `scanfarm_enabled` flag value as true.
 
 ### Complete infrastructure creation
 Here, terraform will create all the required resources from the scratch. First, we will create global-resources and then environment resources. You can tweak the `terraform.tfvars.example` file in each module per your use case.

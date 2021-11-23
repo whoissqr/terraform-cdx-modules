@@ -52,6 +52,12 @@ variable "cluster_name" {
   default     = ""
 }
 
+variable "scanfarm_enabled" {
+  type        = bool
+  description = "Whether scanfarm resources have to be created or not; Defaults to false (BETA)"
+  default     = false
+}
+
 variable "map_users" {
   type = list(object({
     userarn  = string
@@ -195,7 +201,7 @@ variable "db_name" {
 variable "db_postgres_version" {
   type        = string
   description = "Postgres version of the RDS instance"
-  default     = "9.6"
+  default     = "11"
 }
 
 # NOTE: Do NOT use 'user' as the value for 'username' as it throws:

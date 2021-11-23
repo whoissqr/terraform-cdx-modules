@@ -24,23 +24,31 @@ module "eks" {
   write_kubeconfig                     = false
 
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/17.3.0/submodules/node_groups
-  node_groups = {
-    app_nodepool = {
-      key_name         = ""
-      name_prefix      = "app_nodepool_"
-      desired_capacity = var.default_node_pool_min_size
-      min_capacity     = var.default_node_pool_min_size
-      max_capacity     = var.default_node_pool_max_size
-      ami_type         = var.default_node_pool_ami_type
-      instance_types   = [var.default_node_pool_instance_type]
-      disk_size        = var.default_node_pool_disk_size
-      capacity_type    = var.default_node_pool_capacity_type
-      k8s_labels = {
-        app       = "jobfarm"
-        pool-type = "app"
+  node_groups = merge(
+    {
+      app_nodepool = {
+        key_name         = ""
+        name_prefix      = "app_nodepool_"
+        desired_capacity = var.default_node_pool_min_size
+        min_capacity     = var.default_node_pool_min_size
+        max_capacity     = var.default_node_pool_max_size
+        ami_type         = var.default_node_pool_ami_type
+        instance_types   = [var.default_node_pool_instance_type]
+        disk_size        = var.default_node_pool_disk_size
+        capacity_type    = var.default_node_pool_capacity_type
+        k8s_labels = {
+          app       = "jobfarm"
+          pool-type = "app"
+        }
+        subnets = var.vpc_private_subnets
       }
-      subnets = var.vpc_private_subnets
-    },
+    }, local.scanfarm_node_pools
+  )
+}
+
+# If eks cluster already exists
+locals {
+  scanfarm_node_pools = var.scanfarm_enabled ? {
     medium_exec_pool = {
       key_name         = ""
       name_prefix      = "medium_exec_pool_"
@@ -57,12 +65,8 @@ module "eks" {
       }
       subnets = var.vpc_private_subnets
       taints  = var.jobfarm_node_pool_taints
-    }
-  }
-}
+  } } : {}
 
-# If eks cluster already exists
-locals {
   nat_ip_list = [
     for val in var.vpc_nat_public_ips :
     format("%s/32", val)

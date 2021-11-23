@@ -37,7 +37,7 @@ variable "db_name" {
 variable "db_postgres_version" {
   type        = string
   description = "Postgres version of the RDS instance"
-  default     = "9.6"
+  default     = "11"
 }
 
 # NOTE: Do NOT use 'user' as the value for 'username' as it throws:
