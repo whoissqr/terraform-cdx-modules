@@ -1,4 +1,3 @@
-
 echo "export CNC_CLUSTER_NAME=$(terraform output -raw cluster_name)"
 echo "export CNC_CLUSTER_REGION=$(terraform output -raw cluster_region)"
 echo "export CNC_PGHOST=$(terraform output -raw db_instance_address)"
