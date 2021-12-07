@@ -4,7 +4,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 - [EKS Cluster](./eks-cluster): This module will create the EKS cluster and deploy cluster-autoscaler, nginx-ingress-controller in it
 - [S3 Bucket](./s3-bucket): This module will create the S3 bucket
 - [RDS Instance](./rds-instance): This module will create the RDS instance and related security group rules
-- [Kubernetes secrets (with RDS/S3 details)](./secrets): This module will create the kubernetes namespace and required secrets in it
+<!-- - [Kubernetes secrets (with RDS/S3 details)](./secrets): This module will create the kubernetes namespace and required secrets in it -->
 
 ## Inputs
 | Name | Description | Type | Default | Required |
@@ -46,8 +46,8 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 | db_instance_class                     | Instance type of the RDS instance                                                                         | `string`                  | `"db.t2.small"`            | no      |
 | db_size_in_gb                         | Storage size in gb of the RDS instance                                                                    | `number`                  | `10`                       | no      |
 | db_port                               | Port number on which the DB accepts connections                                                           | `number`                  | `5432`                     | no      |
-| create_db_secret                      | Flag to enable/disable the `cnc-db-credentials` secret creation in the eks cluster                        | `bool`                    | `true`                     | no      |
-| create_s3_secret                      | Flag to enable/disable the `cnc-s3-credentials` secret creation in the eks cluster                        | `bool`                    | `true`                     | no      |
+<!-- | create_db_secret                      | Flag to enable/disable the `cnc-db-credentials` secret creation in the eks cluster                        | `bool`                    | `true`                     | no      |
+| create_s3_secret                      | Flag to enable/disable the `cnc-s3-credentials` secret creation in the eks cluster                        | `bool`                    | `true`                     | no      | -->
 
 ## Outputs
 | Name | Description |
@@ -67,7 +67,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 | db_instance_username | The master username for the RDS instance |
 | db_master_password | The master password for the RDS instance |
 | db_subnet_group_id | The subnet group name of the RDS instance |
-| namespace | The namespace in the EKS cluster where secrets resides in |
+<!-- | namespace | The namespace in the EKS cluster where secrets resides in | -->
 
 
 ## Creating the CNC infrastructure on AWS
@@ -97,7 +97,7 @@ $ export TF_VAR_prefix="<unique_prefix_str>"
 - To create scanfarm resources, you need to set `scanfarm_enabled` flag value as true.
 
 ### Scenario-1: Complete infrastructure creation
-Here, terraform will create all the required resources from the scratch
+Here, terraform will create all the required resources from the scratch (set `scanfarm_enabled` flag value as true to create scanfarm resources).
 ```bash
 $ terraform init
 $ terraform plan
@@ -105,7 +105,7 @@ $ terraform apply --auto-approve
 ```
 
 ### Scenario-2: Infrastructure creation with existing VPC
-Here, terraform will create the EKS cluster, S3 bucket, RDS instance, kubernetes namespace and required secrets in it.
+Here, terraform will create the EKS cluster, RDS instance and deploy cluster-autoscaler, nginx-ingress-controller in the cluster. if `scanfarm_enabled` is true, then it will also create the S3 bucket.
 ```bash
 $ export TF_VAR_prefix="cnc"
 $ export TF_VAR_vpc_id="vpc-07dc99f9a6682xxxx"
@@ -115,7 +115,7 @@ $ terraform apply --auto-approve
 ```
 
 ### Scenario-3: Infrastructure creation with existing VPC and EKS cluster
-Here, terraform will try to deploy cluster-autoscaler, nginx-ingress-controller in the existing EKS cluster and then create the S3 bucket, RDS instance, kubernetes namespace and required secrets in it.
+Here, terraform will try to deploy cluster-autoscaler, nginx-ingress-controller in the existing EKS cluster and then create the RDS instance. if `scanfarm_enabled` is true, then it will also create the S3 bucket.
 ```bash
 $ export TF_VAR_prefix="cnc"
 $ export TF_VAR_vpc_id="vpc-07dc99f9a6682xxxx"
@@ -126,8 +126,8 @@ $ terraform apply --auto-approve
 ```
 **Note:** If cluster-autoscaler and nginx-ingress-controller is already deployed in your eks cluster, then set the respective flags to `false`
 
-### Scenario-4: Infrastructure creation with existing VPC, EKS cluster and S3 bucket
-Here, terraform will create the RDS instance and  `cnc-db-credentials`, `cnc-s3-credentials` secrets in the kubernetes namespace.
+<!-- ### Scenario-4: Infrastructure creation with existing VPC, EKS cluster and S3 bucket
+Here, terraform will create the RDS instance.
 ```bash
 $ export TF_VAR_prefix="cnc"
 $ export TF_VAR_vpc_id="vpc-07dc99f9a6682xxxx"
@@ -136,9 +136,9 @@ $ export TF_VAR_bucket_name="cnc-uploads-bucket"
 $ terraform init
 $ terraform plan
 $ terraform apply --auto-approve
-```
+``` -->
 
-### Scenario-5: Infrastructure creation with existing VPC, EKS cluster, S3 bucket and RDS instance
+<!-- ### Scenario-5: Infrastructure creation with existing VPC, EKS cluster, S3 bucket and RDS instance
 Here, terraform will create the namespace and two kubernetes secrets (`cnc-db-credentials`, `cnc-s3-credentials`) in it.
 ```bash
 $ export TF_VAR_prefix="cnc"
@@ -151,4 +151,4 @@ $ terraform init
 $ terraform plan
 $ terraform apply --auto-approve
 ```
-**Note:** As terraform can't read the db password from existing db, You MUST pass `db_password` variable value along with `db_name`
+**Note:** As terraform can't read the db password from existing db, You MUST pass `db_password` variable value along with `db_name` -->

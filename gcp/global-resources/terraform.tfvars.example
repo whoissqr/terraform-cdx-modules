@@ -7,3 +7,6 @@ master_authorized_networks_config = [
     cidr_block   = "0.0.0.0/0"
   },
 ]
+
+## Change the below flag to create scanfarm resources
+scanfarm_enabled = false
