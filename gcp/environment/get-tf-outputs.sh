@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "export CNC_CLUSTER_NAME=$(terraform output -raw gcp_cluster_name)"
 echo "export CNC_CLUSTER_REGION=$(terraform output -raw gcp_cluster_region)"
 echo "export GCP_PROJECT_ID=$(terraform output -raw gcp_project_id)"
