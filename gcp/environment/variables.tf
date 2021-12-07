@@ -171,26 +171,26 @@ variable "app_namespace" {
   default     = ""
 }
 
-variable "create_db_secret" {
-  type        = bool
-  description = "Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster"
-  default     = true
-}
+# variable "create_db_secret" {
+#   type        = bool
+#   description = "Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster"
+#   default     = true
+# }
 
-variable "create_gcs_secret" {
-  type        = bool
-  description = "Flag to enable/disable the 'cnc-gcs-credentials' secret creation in the gke cluster"
-  default     = true
-}
+# variable "create_gcs_secret" {
+#   type        = bool
+#   description = "Flag to enable/disable the 'cnc-gcs-credentials' secret creation in the gke cluster"
+#   default     = true
+# }
 
-variable "db_host" {
-  type        = string
-  description = "Host addr of the CloudSQL instance"
-  default     = ""
-}
+# variable "db_host" {
+#   type        = string
+#   description = "Host addr of the CloudSQL instance"
+#   default     = ""
+# }
 
-variable "db_port" {
-  type        = number
-  description = "Port number of CloudSQL instance"
-  default     = 5432
-}
+# variable "db_port" {
+#   type        = number
+#   description = "Port number of CloudSQL instance"
+#   default     = 5432
+# }

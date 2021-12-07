@@ -85,21 +85,24 @@ Terraform creates the below GCP cloud resources by using the individual modules.
 | ingress_white_list_ip_ranges          | List of source ip ranges for load balancer whitelisting; we recommend you to pass the list of your organization source IPs. Note: You must add NAT IP of your existing VPC or `gcp_nat_public_ip` output value from global module to this list | `list("string")` | `['0.0.0.0/0']`                          | no       |
 | ingress_settings                      | Additional settings which will be passed to the Helm chart values, see https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx | `map("string")` | `{}`                                     | no       |
 | app_namespace                         | Namespace of existing cluster in which secrets can be created; if empty, then namespace will be created with prefix value | `string`       | `""`                                     | no       |
-| create_db_secret                      | Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster                   | `bool`         | `true`                                   | no       |
+<!-- | create_db_secret                      | Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster                   | `bool`         | `true`                                   | no       |
 | create_gcs_secret                     | Flag to enable/disable the 'cnc-gcs-credentials' secret creation in the gke cluster                  | `bool`         | `true`                                   | no       |
 | db_host                               | Host addr of the CloudSQL instance                                                                   | `string`       | `""`                                     | no       |
-| db_port                               | Port number of CloudSQL instance                                                                 | `number`       | `5432`                                   | no       |
+| db_port                               | Port number of CloudSQL instance                                                                 | `number`       | `5432`                                   | no       | -->
 
 ### Outputs
 | Name | Description |
 |------|-------------|
+| gcp_project_id | The ID of the GCP project |
+| gcp_cluster_name | The name of the GKE cluster |
+| gcp_cluster_region | The GCP region this GKE cluster resides in |
 | gcs_bucket_name | The name of the GCS bucket |
 | gcs_bucket_region | The region where GCS bucket resides in |
 | db_instance_name | The name of the CloudSQL instance |
 | db_instance_address | The address of the CloudSQL instance |
 | db_instance_username | The master username for the CloudSQL instance |
 | db_master_password | The master password for the CloudSQL instance |
-| namespace | The namespace in the GKE cluster where secrets resides in |
+<!-- | namespace | The namespace in the GKE cluster where secrets resides in | -->
 
 ## Creating the CNC infrastructure on GCP
 
