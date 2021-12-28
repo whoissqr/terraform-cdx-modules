@@ -23,7 +23,7 @@ data "google_client_config" "provider" {}
 
 data "google_container_cluster" "default" {
   name     = var.gcp_cluster_name
-  location = "us-east1"
+  location = var.gcp_region
 }
 
 provider "kubernetes" {
