@@ -49,9 +49,9 @@ module "eks" {
 # If eks cluster already exists
 locals {
   scanfarm_node_pools = var.scanfarm_enabled ? {
-    medium_exec_pool = {
+    small_exec_pool = {
       key_name         = ""
-      name_prefix      = "medium_exec_pool_"
+      name_prefix      = "small_exec_pool_"
       desired_capacity = 1
       min_capacity     = var.jobfarm_node_pool_min_size
       max_capacity     = var.jobfarm_node_pool_max_size

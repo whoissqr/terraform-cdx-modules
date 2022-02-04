@@ -6,7 +6,7 @@ locals {
   service_range_name = "${local.network_name}-service"
 
   scanfarm_node_pools = var.scanfarm_enabled ? [{
-    name               = "medium-pool"
+    name               = "small-pool"
     autoscaling        = true
     node_count         = 0
     min_count          = var.jobfarm_node_pool_min_size
@@ -22,12 +22,12 @@ locals {
   }] : []
 
   scanfarm_node_pool_labels = var.scanfarm_enabled ? {
-    "medium-pool" = {
+    "small-pool" = {
       app       = "jobfarm"
       pool-type = "small"
   } } : {}
 
   scanfarm_node_pool_taints = var.scanfarm_enabled ? {
-    "medium-pool" = var.jobfarm_node_pool_taints
+    "small-pool" = var.jobfarm_node_pool_taints
   } : {}
 }
