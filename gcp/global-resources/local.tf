@@ -24,7 +24,7 @@ locals {
   scanfarm_node_pool_labels = var.scanfarm_enabled ? {
     "medium-pool" = {
       app       = "jobfarm"
-      pool-type = "medium"
+      pool-type = "small"
   } } : {}
 
   scanfarm_node_pool_taints = var.scanfarm_enabled ? {

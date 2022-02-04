@@ -61,7 +61,7 @@ locals {
       capacity_type    = var.jobfarm_node_pool_capacity_type
       k8s_labels = {
         app       = "jobfarm"
-        pool-type = "medium"
+        pool-type = "small"
       }
       subnets = var.vpc_private_subnets
       taints  = var.jobfarm_node_pool_taints
