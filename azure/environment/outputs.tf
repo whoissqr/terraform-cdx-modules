@@ -1,9 +1,9 @@
 output "fqdn" {
-  value = resource.azurerm_postgresql_flexible_server.example.fqdn
+  value = resource.azurerm_postgresql_flexible_server.postgres.fqdn
 }
 
 output "postgres_server_id" {
-  value = resource.azurerm_postgresql_flexible_server.example.id
+  value = resource.azurerm_postgresql_flexible_server.postgres.id
 }
 
 output "storageaccount_name" {
@@ -12,12 +12,12 @@ output "storageaccount_name" {
 
 output "db_login" {
   sensitive = true
-  value     = resource.azurerm_postgresql_flexible_server.example.administrator_login
+  value     = resource.azurerm_postgresql_flexible_server.postgres.administrator_login
 }
 
 output "db_password" {
   sensitive = true
-  value     = resource.azurerm_postgresql_flexible_server.example.administrator_password
+  value     = resource.azurerm_postgresql_flexible_server.postgres.administrator_password
 }
 
 output "bucket" {

@@ -19,7 +19,7 @@ provider "azurerm" {
 
 
 
-resource "azurerm_postgresql_flexible_server" "example" {
+resource "azurerm_postgresql_flexible_server" "postgres" {
   name                   = "${var.prefix}psqlserver"
   resource_group_name    = var.rg_name
   location               = var.rg_location
@@ -32,16 +32,15 @@ resource "azurerm_postgresql_flexible_server" "example" {
 }
 
 
-resource "azurerm_postgresql_flexible_server_configuration" "example" {
+resource "azurerm_postgresql_flexible_server_configuration" "serverconfig" {
   name      = "require_secure_transport"
-  server_id = azurerm_postgresql_flexible_server.example.id
+  server_id = azurerm_postgresql_flexible_server.postgres.id
   value     = "off"
 }
 
 resource "azurerm_postgresql_flexible_server_firewall_rule" "postgresqlfwrule" {
   name                = "Postgrescnc"
-  #resource_group_name = var.rg_name
-  server_id         = azurerm_postgresql_flexible_server.example.id
+  server_id         = azurerm_postgresql_flexible_server.postgres.id
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
 }

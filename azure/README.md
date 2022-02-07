@@ -108,8 +108,7 @@ Name | Description | Type | Default
 Name | Description
 ---- | -----------
 `fqdn` | fully qualified domain name of the postgres server
- `postgres_server_id` | id the postgresql server
- `storageaccount_id` | storage account id 
+ `postgres_server_id` | id the postgresql server .
  `db_login` | username of the master database .
  `db_password` | password of the master database .
  `bucket` | azure storage bucket name 
