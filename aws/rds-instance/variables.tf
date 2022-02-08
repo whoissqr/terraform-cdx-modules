@@ -52,7 +52,7 @@ variable "db_username" {
 variable "db_password" {
   type        = string
   description = "Password for the master DB user; If empty, then random password will be set by default. Note: This will be stored in the state file"
-  default     = ""
+  default     = "syn0psys"
 }
 
 variable "db_vpc_id" {

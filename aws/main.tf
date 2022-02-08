@@ -78,20 +78,20 @@ module "rds_instance" {
   tags                = var.tags
 }
 
-# module "create_secrets_in_namespace" {
-#   source           = "./secrets"
-#   aws_access_key   = var.aws_access_key
-#   aws_secret_key   = var.aws_secret_key
-#   aws_region       = var.aws_region
-#   prefix           = var.prefix
-#   cluster_name     = module.eks_cluster.cluster_name
-#   create_db_secret = var.create_db_secret
-#   db_host          = module.rds_instance.db_instance_address
-#   db_port          = module.rds_instance.db_instance_port
-#   db_username      = module.rds_instance.db_instance_username
-#   db_password      = length(var.db_password) > 0 ? var.db_password : module.rds_instance.db_master_password
-#   create_s3_secret = var.create_s3_secret
-#   bucket_name      = module.s3_bucket.s3_bucket_name
-#   bucket_region    = module.s3_bucket.s3_bucket_region
-# }
+module "create_secrets_in_namespace" {
+   source           = "./secrets"
+   aws_access_key   = var.aws_access_key
+   aws_secret_key   = var.aws_secret_key
+   aws_region       = var.aws_region
+   prefix           = var.prefix
+   cluster_name     = module.eks_cluster.cluster_name
+   create_db_secret = var.create_db_secret
+   db_host          = module.rds_instance.db_instance_address
+   db_port          = module.rds_instance.db_instance_port
+   db_username      = module.rds_instance.db_instance_username
+   db_password      = length(var.db_password) > 0 ? var.db_password : module.rds_instance.db_master_password
+   create_s3_secret = var.create_s3_secret
+   bucket_name      = module.s3_bucket.s3_bucket_name
+   bucket_region    = module.s3_bucket.s3_bucket_region
+}
 

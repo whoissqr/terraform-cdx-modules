@@ -24,6 +24,7 @@ variable "tags" {
     product    = "cnc"
     automation = "dns"
     managedby  = "terraform"
+    OWNER      = "chaoshi"
   }
 }
 
@@ -244,14 +245,14 @@ variable "db_port" {
 }
 
 # Secrets configuration
-# variable "create_db_secret" {
-#   type        = bool
-#   description = "Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster"
-#   default     = true
-# }
+variable "create_db_secret" {
+   type        = bool
+   description = "Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster"
+   default     = true
+}
 
-# variable "create_s3_secret" {
-#   type        = bool
-#   description = "Flag to enable/disable the 'cnc-s3-credentials' secret creation in the eks cluster"
-#   default     = true
-# }
+variable "create_s3_secret" {
+   type        = bool
+   description = "Flag to enable/disable the 'cnc-s3-credentials' secret creation in the eks cluster"
+   default     = true
+}
