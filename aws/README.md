@@ -45,7 +45,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 | db_public_access                      | Bool to control if instance is publicly accessible                                                        | `bool`                    | `false`                    | no      |
 | db_instance_class                     | Instance type of the RDS instance                                                                         | `string`                  | `"db.t2.small"`            | no      |
 | db_size_in_gb                         | Storage size in gb of the RDS instance                                                                    | `number`                  | `10`                       | no      |
-| db_port                               | Port number on which the DB accepts connections                                                           | `number`                  | `5432`                     | no      |
+| db_port                               | Port number on which the DB accepts connections                                                           | `number`                  | `3306`                     | no      |
 <!-- | create_db_secret                      | Flag to enable/disable the `cnc-db-credentials` secret creation in the eks cluster                        | `bool`                    | `true`                     | no      |
 | create_s3_secret                      | Flag to enable/disable the `cnc-s3-credentials` secret creation in the eks cluster                        | `bool`                    | `true`                     | no      | -->
 

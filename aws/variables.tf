@@ -241,7 +241,7 @@ variable "db_size_in_gb" {
 variable "db_port" {
   type        = number
   description = "Port number on which the DB accepts connections"
-  default     = 5432
+  default     = 3306
 }
 
 # Secrets configuration
