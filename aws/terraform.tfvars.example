@@ -1,0 +1,8 @@
+prefix         = "cdx"
+aws_access_key = "AKIARDHU3VVxxxxxxxxx"
+aws_secret_key = "Mv8fDqCa+bOyyyyyyyyyyyyyyyy"
+aws_region     = "ap-southeast-1"
+scanfarm_enabled = false
+db_password    = "syn0psys"
+create_s3_secret = false
+create_db_secret = true
