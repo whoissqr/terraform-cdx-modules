@@ -68,7 +68,6 @@ module "rds_instance" {
   db_vpc_cidr_blocks  = [module.vpc.vpc_cidr_block]
   db_private_subnets  = module.vpc.vpc_private_subnets
   db_name             = var.db_name
-  db_postgres_version = var.db_postgres_version
   db_username         = var.db_username
   db_password         = var.db_password
   db_port             = var.db_port

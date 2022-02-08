@@ -14,29 +14,65 @@ resource "random_string" "password" {
 locals {
   is_rds_instance_exist = length(var.db_name) > 0 ? true : false
   namespace             = replace(lower(var.prefix), "/[^a-zA-Z0-9]/", "")
-  db_name               = "${local.namespace}postgres"
+  db_name               = "${local.namespace}mariadb"
 }
 
-# Create the postgres security group
+# Create the mariadb security group
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
-resource "aws_security_group" "allow_postgres" {
+resource "aws_security_group" "allow_mariadb" {
   count       = var.create_db_instance ? 1 : 0
-  name        = "${local.namespace}-postgres-sg"
-  description = "Allow postgres inbound traffic"
+  name        = "${local.namespace}-mariadb-sg"
+  description = "Allow mariadb inbound traffic"
   vpc_id      = var.db_vpc_id
   tags        = var.tags
 }
 
-# Create the postgres inbound security group rule
+# Create the mariadb inbound security group rule
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
-resource "aws_security_group_rule" "allow_postgres_rule_inbound" {
+resource "aws_security_group_rule" "allow_mariadb_rule_inbound" {
   count             = var.create_db_instance ? 1 : 0
   type              = "ingress"
   from_port         = var.db_port
   to_port           = var.db_port
   protocol          = "tcp"
-  security_group_id = aws_security_group.allow_postgres.0.id
+  security_group_id = aws_security_group.allow_mariadb.0.id
   cidr_blocks       = var.db_vpc_cidr_blocks
+}
+
+# Shi Chao, create db param group for mariaDB
+resource "aws_db_parameter_group" "pname_group" {
+    name   = "${local.namespace}-mariadb-db-parameter-group"
+    family = "mariadb10.6"
+
+    parameter {
+      name                            = "optimizer_search_depth"
+      value                           = "0"
+      apply_method                    = "pending-reboot"
+    }
+
+    parameter {
+      name                            = "character_set_server"
+      value                           = "utf8mb4"
+      apply_method                    = "pending-reboot"
+    }
+
+    parameter {
+      name                            = "collation_server"
+      value                           = "utf8mb4_general_ci"
+      apply_method                    = "pending-reboot"
+    }
+
+    parameter {
+      name                            = "lower_case_table_names"
+      value                           = "1"
+      apply_method                    = "pending-reboot"
+    }
+
+    parameter {
+      name                            = "log_bin_trust_function_creators"
+      value                           = "1"
+      apply_method                    = "pending-reboot"
+    }
 }
 
 # Create the rds instance if create_db_instance flag is enabled
@@ -47,13 +83,13 @@ module "rds" {
   create_db_instance        = var.create_db_instance
   create_db_parameter_group = var.create_db_instance
   create_db_subnet_group    = var.create_db_instance
-  identifier                = "${local.namespace}-postgres"
+  identifier                = "${local.namespace}-mariadb"
 
-  engine               = "postgres"
-  engine_version       = var.db_postgres_version
-  major_engine_version = var.db_postgres_version
+  engine               = "mariadb"
+  engine_version       = var.db_mariadb_version
+  major_engine_version = var.db_mariadb_version
   instance_class       = var.db_instance_class
-  family               = "postgres${var.db_postgres_version}"
+  family               = "mariadb${var.db_mariadb_version}"
   allocated_storage    = var.db_size_in_gb
   storage_type         = "gp2"
 
@@ -67,8 +103,9 @@ module "rds" {
   backup_window           = "03:00-06:00"
   backup_retention_period = 0
 
-  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-  vpc_security_group_ids          = var.create_db_instance ? [aws_security_group.allow_postgres.0.id] : []
+  enabled_cloudwatch_logs_exports = ["audit","error","general","slowquery"]
+  vpc_security_group_ids          = var.create_db_instance ? [aws_security_group.allow_mariadb.0.id] : []
+  parameter_group_name            = aws_db_parameter_group.pname_group.name
   subnet_ids                      = var.db_private_subnets
   publicly_accessible             = var.db_public_access
   skip_final_snapshot             = true

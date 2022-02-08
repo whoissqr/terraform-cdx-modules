@@ -34,10 +34,10 @@ variable "db_name" {
   default     = ""
 }
 
-variable "db_postgres_version" {
+variable "db_mariadb_version" {
   type        = string
-  description = "Postgres version of the RDS instance"
-  default     = "11"
+  description = "MariaDB version of the RDS instance"
+  default     = "10.6"
 }
 
 # NOTE: Do NOT use 'user' as the value for 'username' as it throws:
@@ -46,7 +46,7 @@ variable "db_postgres_version" {
 variable "db_username" {
   type        = string
   description = "Username for the master DB user. Note: Do NOT use 'user' as the value"
-  default     = "postgres"
+  default     = "codedx"
 }
 
 variable "db_password" {
@@ -94,15 +94,17 @@ variable "db_size_in_gb" {
 variable "db_port" {
   type        = number
   description = "Port number on which the DB accepts connections"
-  default     = 5432
+  default     = 3306
 }
 
 variable "tags" {
   type        = map(string)
   description = "AWS Tags to add to all resources created (wherever possible)"
   default = {
-    product    = "cnc"
+    product    = "cdx"
     automation = "dns"
     managedby  = "terraform"
   }
 }
+
+

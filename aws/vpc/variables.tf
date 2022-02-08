@@ -44,7 +44,7 @@ variable "tags" {
   type        = map(string)
   description = "AWS Tags to add to all resources created (wherever possible)"
   default = {
-    product    = "cnc"
+    product    = "cdx"
     automation = "dns"
     managedby  = "terraform"
   }

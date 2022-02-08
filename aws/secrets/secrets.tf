@@ -39,10 +39,10 @@ resource "kubernetes_namespace" "create_ns" {
 }
 
 # Create the db credentials secret in kubernetes namespace
-resource "kubernetes_secret" "cnc_db_credentials" {
+resource "kubernetes_secret" "cdx_db_credentials" {
   count = var.create_db_secret ? 1 : 0
   metadata {
-    name      = "cnc-db-credentials"
+    name      = "cdx-db-credentials"
     namespace = local.namespace
     labels = {
       "app.kubernetes.io/managed-by" = "terraform"
@@ -64,10 +64,10 @@ resource "kubernetes_secret" "cnc_db_credentials" {
 }
 
 # Create the s3 credentials secret in kubernetes namespace
-resource "kubernetes_secret" "cnc_s3_credentials" {
+resource "kubernetes_secret" "cdx_s3_credentials" {
   count = var.create_s3_secret ? 1 : 0
   metadata {
-    name      = "cnc-s3-credentials"
+    name      = "cdx-s3-credentials"
     namespace = local.namespace
     labels = {
       "app.kubernetes.io/managed-by" = "terraform"

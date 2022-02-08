@@ -29,7 +29,7 @@ variable "cluster_name" {
 
 variable "create_db_secret" {
   type        = bool
-  description = "Flag to enable/disable the 'cnc-db-credentials' secret creation in the eks cluster"
+  description = "Flag to enable/disable the 'cdx-db-credentials' secret creation in the eks cluster"
   default     = true
 }
 
@@ -55,7 +55,7 @@ variable "db_password" {
 
 variable "create_s3_secret" {
   type        = bool
-  description = "Flag to enable/disable the 'cnc-s3-credentials' secret creation in the eks cluster"
+  description = "Flag to enable/disable the 'cdx-s3-credentials' secret creation in the eks cluster"
   default     = true
 }
 
