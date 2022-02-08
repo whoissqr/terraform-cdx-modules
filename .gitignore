@@ -3,6 +3,8 @@
 # To make changes to this file please modify the module 
 #############################################################
 
+aws/terraform.tfvars.example
+
 # Editors
 **.idea/
 **.vscode/
