@@ -211,13 +211,13 @@ variable "db_postgres_version" {
 variable "db_username" {
   type        = string
   description = "Username for the master DB user. `Note: Do NOT use 'user' as the value"
-  default     = "postgres"
+  default     = "codedx"
 }
 
 variable "db_password" {
   type        = string
   description = "Password for the master DB user; If empty, then random password will be set by default. Note: This will be stored in the state file"
-  default     = ""
+  default     = "syn0psys"
 }
 
 variable "db_public_access" {

@@ -87,6 +87,7 @@ variable "tags" {
     product    = "cdx"
     automation = "dns"
     managedby  = "terraform"
+    name       = "cdx-eks"
   }
 }
 

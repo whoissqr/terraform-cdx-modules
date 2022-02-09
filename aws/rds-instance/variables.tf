@@ -46,13 +46,13 @@ variable "db_mariadb_version" {
 variable "db_username" {
   type        = string
   description = "Username for the master DB user. Note: Do NOT use 'user' as the value"
-  default     = "codedx"
+  default     = ""
 }
 
 variable "db_password" {
   type        = string
   description = "Password for the master DB user; If empty, then random password will be set by default. Note: This will be stored in the state file"
-  default     = "syn0psys"
+  default     = ""
 }
 
 variable "db_vpc_id" {
