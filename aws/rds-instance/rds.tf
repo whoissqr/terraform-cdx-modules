@@ -93,7 +93,8 @@ module "rds" {
   allocated_storage    = var.db_size_in_gb
   storage_type         = "gp2"
 
-  name     = local.db_name
+  #name     = local.db_name
+  name     = "codedxdb"
   username = var.db_username
   password = local.is_rds_instance_exist || length(var.db_password) > 0 ? var.db_password : random_string.password.0.result
   port     = var.db_port
