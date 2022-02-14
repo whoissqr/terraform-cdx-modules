@@ -8,6 +8,7 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 ### preparation
 - setup your *aws_access_key, aws_secret_key and aws_region* in [terraform.tfvars.example](terraform.tfvars.example)
 - change default RDS *db_port, db_username and db_password* in [variables.tf](variables.tf)
+- change default node pool type, minimum/maximum pool size in [variables.tf](variables.tf)
 
 
 ### setup the infra in AWS
