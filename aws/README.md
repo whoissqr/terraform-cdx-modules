@@ -6,7 +6,8 @@ Terraform creates the below AWS cloud resources by using the individual modules.
 <!-- - [Kubernetes secrets (with RDS/S3 details)](./secrets): This module will create the kubernetes namespace and required secrets in it -->
 
 ## preparation
-- setup your aws_access_key, aws_secret_key and aws_region in [terraform.tfvars.example](terraform.tfvars.example)
+- setup your *aws_access_key, aws_secret_key and aws_region* in [terraform.tfvars.example](terraform.tfvars.example)
+- change default RDS *db_port, db_username and db_password* in [variables.tf](variables.tf)
 
 
 ## setup the infra in AWS
